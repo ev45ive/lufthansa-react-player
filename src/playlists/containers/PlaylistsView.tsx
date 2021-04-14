@@ -70,6 +70,8 @@ export const PlaylistsView = (props: Props) => {
     useEffect(() => {
         setSelectedPlaylist(playlists.find(p => p.id == selectedId))
     }, [selectedId, playlists])
+    console.log(selectedPlaylist)
+    console.log('xxx', selectedPlaylist && mode === 'details')
 
     return (
         <div>
@@ -93,7 +95,7 @@ export const PlaylistsView = (props: Props) => {
                         playlist={selectedPlaylist}
                         cancel={cancel} />}
 
-                        <div className="alert alert-info">Please select playlist</div>
+                        {!selectedPlaylist && mode === 'details' && <div className="alert alert-info">Please select playlist</div>}
                 </div>
             </div>
         </div>
