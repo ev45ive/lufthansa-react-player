@@ -70,8 +70,6 @@ export const PlaylistsView = (props: Props) => {
     useEffect(() => {
         setSelectedPlaylist(playlists.find(p => p.id == selectedId))
     }, [selectedId, playlists])
-    console.log(selectedPlaylist)
-    console.log('xxx', selectedPlaylist && mode === 'details')
 
     return (
         <div>
@@ -82,7 +80,8 @@ export const PlaylistsView = (props: Props) => {
                     <PlaylistList
                         onSelected={id => { setSelectedId(id) }}
                         playlists={playlists}
-                        selectedId={selectedId} />
+                        selectedId={selectedId} 
+                        setPlaylists={setPlaylists}/>
 
                     <button className="btn btn-info btn-block mt-4">Create New Playlist</button>
                 </div>
