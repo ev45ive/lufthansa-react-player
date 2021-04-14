@@ -17,6 +17,8 @@ export const PlaylistList = ({ playlists, selectedId, onSelected }: Props) => {
                         onClick={() => onSelected(playlist.id)}
                         key={playlist.id}>
                         {playlist.name}
+
+                        <span className="close">&times;</span>
                     </div>
                 )}
             </div>

@@ -30,20 +30,30 @@ const data: Playlist[] = [
 ]
 
 export const PlaylistsView = (props: Props) => {
-    const [selectedId, setSelectedId] = useState<string | undefined>('234')
+    const [selectedId, setSelectedId] = useState<string | undefined>()
     const [selectedPlaylist, setSelectedPlaylist] = useState<Playlist | undefined>()
     const [mode, setMode] = useState<'details' | 'form'>('details')
     const [playlists, setPlaylists] = useState<Playlist[]>(data)
 
     /* TODO:
-        - Przycisk Edit w Details "przełącza" na formularza (*zmiana mode! props!) **=> ---DONE
-        - Przycisk Cancel w Formularzu "przełącza" na details (*zmiana mode! props!) **=> ---DONE
-        - Przycisk Save w Formularzu:
-            - "przełącza" na details (*zmiana mode! props!)
-            - przekazuje Draft (szkic / nizapisane dane playlisty *props!) do PlaylistsView
-            - PlaylistsView podmienia szkic na liście playlist (! Immutable - kopia renderuje!)
 
-        - Zapisana playlista jest widoczna na liscie i w details!
+        - git checkout -b mojezadanie1
+        - git add .
+        - git commit -m "Moje zadanie"
+        - git checkout master
+        - git pull
+        - git checkout -b mojezadanie2
+        - szuru buru...
+        - git add .
+        - git commit -m "Moje zadanie 2"
+
+
+        - Show "Please select playlist when nothing selected"
+        - Remove playlists when X clicked
+        - Create new playlist
+            - Show Empty form when button [ Create new playlist ] cliked
+            - Cancel... go back to details.
+            - Save - add new playlist to list and select in in details.
     */
 
     const edit = () => {
@@ -54,14 +64,7 @@ export const PlaylistsView = (props: Props) => {
     }
     const save = (draft: Playlist) => {
         setMode('details')
-        const index = playlists.findIndex(p => p.id === draft.id)
-        if (index !== -1) {
-             setPlaylists([
-                 ...playlists.slice(0, index),
-                 draft,
-                 ...playlists.slice(index + 1)
-             ])
-        }
+        setPlaylists(playlists.map(p => p.id === draft.id ? draft : p))
     }
 
     useEffect(() => {
@@ -78,15 +81,19 @@ export const PlaylistsView = (props: Props) => {
                         onSelected={id => { setSelectedId(id) }}
                         playlists={playlists}
                         selectedId={selectedId} />
+
+                    <button className="btn btn-info btn-block mt-4">Create New Playlist</button>
                 </div>
                 <div className="col">
-                    {selectedPlaylist && mode === 'details' && <PlaylistDetails 
-                    edit={edit}
-                    playlist={selectedPlaylist} />}
-                    {selectedPlaylist && mode === 'form' && <PlaylistEditForm 
-                    save={save}
-                    playlist={selectedPlaylist} 
-                    cancel={cancel}/>}
+                    {selectedPlaylist && mode === 'details' && <PlaylistDetails
+                        edit={edit}
+                        playlist={selectedPlaylist} />}
+                    {selectedPlaylist && mode === 'form' && <PlaylistEditForm
+                        save={save}
+                        playlist={selectedPlaylist}
+                        cancel={cancel} />}
+
+                        <div className="alert alert-info">Please select playlist</div>
                 </div>
             </div>
         </div>
