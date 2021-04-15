@@ -17,6 +17,7 @@ export const PlaylistAddForm = ({ saveNewPlaylist, cancelNewPlaylist, selectedId
   const [acceptNew, setAcceptNew] = useState(false)
   const [selectedPlaylistId, setSelectedPlaylistId] = useState(selectedId)
 
+  
   useEffect(() => {
     if (selectedPlaylistId !== selectedId) {
       if (acceptNew) {
