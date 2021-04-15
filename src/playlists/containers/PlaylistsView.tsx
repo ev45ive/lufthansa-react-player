@@ -72,7 +72,6 @@ export const PlaylistsView = (props: Props) => {
     }
 
     const saveNewPlaylist = (newPlaylist: Playlist) => {
-        console.log('zapisz mnie')
         setMode('details')
         setPlaylists([
             ...playlists,
@@ -82,12 +81,10 @@ export const PlaylistsView = (props: Props) => {
     }
 
     const createNewPlaylist = () => {
-        console.log('stworz nowa')
         setMode('addForm')
     }
 
     const cancelNewPlaylist = () => {
-        console.log('cancel me!')
         setMode('details')
     }
 
@@ -116,7 +113,9 @@ export const PlaylistsView = (props: Props) => {
 
                         {!selectedPlaylist && mode === 'details' && <div className="alert alert-info">Please select playlist</div>}
 
-                        {mode === 'addForm' && <PlaylistAddForm cancelNewPlaylist={cancelNewPlaylist} saveNewPlaylist={saveNewPlaylist}/>}
+                        {mode === 'addForm' && <PlaylistAddForm cancelNewPlaylist={cancelNewPlaylist} saveNewPlaylist={saveNewPlaylist}
+                        selectedId={selectedId}
+                        setMode={setMode}/>}
                 </div>
             </div>
         </div>
