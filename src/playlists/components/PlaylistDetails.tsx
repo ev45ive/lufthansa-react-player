@@ -4,8 +4,10 @@ import styles from './PlaylistDetails.module.css'
 
 interface Props {
     playlist: Playlist;
-    edit: React.MouseEventHandler<HTMLButtonElement>;
+    // edit: (x: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
+    edit: () => void
 }
+
 
 export const PlaylistDetails: React.FC<Props> = ({ playlist, edit }) => {
     return (
@@ -23,7 +25,7 @@ export const PlaylistDetails: React.FC<Props> = ({ playlist, edit }) => {
                 <dt>Description:</dt>
                 <dd>{playlist.description}</dd>
             </dl>
-            
+
             <button className="btn btn-danger" onClick={edit}>Edit</button>
         </div>
     )

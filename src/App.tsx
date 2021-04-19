@@ -3,6 +3,7 @@ import { PlaylistsView } from './playlists/containers/PlaylistsView';
 
 // npm i bootstrap
 import 'bootstrap/dist/css/bootstrap.css'
+import { MusicSearchView } from './music-search/containers/MusicSearchView';
 
 function App() {
   return (
@@ -14,7 +15,8 @@ function App() {
 
             <h1>MusicApp</h1>
 
-            <PlaylistsView />
+            {/* <PlaylistsView /> */}
+            <MusicSearchView/>
           </div>
         </div>
       </div>

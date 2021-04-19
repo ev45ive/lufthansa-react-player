@@ -1,10 +1,14 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
 import { Playlist } from '../../model/Playlist'
 
+interface ValidationErrors {
+    [fieldName: string]: Error[] | null;
+}
+
 interface Props {
     playlist: Playlist;
     cancel: React.MouseEventHandler<HTMLButtonElement>;
-    save: (draft: Playlist) => void
+    save: (draft: Playlist) => null | Error[]
 }
 
 export const PlaylistEditForm = ({ playlist, cancel, save }: Props) => {
@@ -15,14 +19,16 @@ export const PlaylistEditForm = ({ playlist, cancel, save }: Props) => {
     const [name, setName] = useState(playlist.name)
     const [isPublic, setIsPublic] = useState(playlist.public)
     const [description, setDescription] = useState(playlist.description)
+    const [errors, setErrors] = useState<Error[] | null>(null)
 
     const submitForm = () => {
-        save({
-            id: playlistId, 
-            name: name, 
-            public: isPublic, 
+        const result = save({
+            id: playlistId,
+            name: name,
+            public: isPublic,
             description: description
         })
+        setErrors(result)
     }
 
     useEffect(() => {
@@ -45,7 +51,11 @@ export const PlaylistEditForm = ({ playlist, cancel, save }: Props) => {
             <h3>PlaylistEditForm</h3>
 
             {message && <div className="alert alert-danger">{message} <button onClick={() => setAcceptNew(true)}>OK</button></div>}
-            
+
+            {errors && errors.map((error, index) => <p className="alert alert-danger" key={index}>
+                {error.message}
+            </p>)}
+
             <div className="form-group">
                 <label>Name:</label>
                 <input type="text" className="form-control" value={name}
