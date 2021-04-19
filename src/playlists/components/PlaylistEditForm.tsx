@@ -3,7 +3,7 @@ import { Playlist } from '../../model/Playlist'
 
 interface Props {
     playlist: Playlist;
-    cancel: () => void;
+    cancel: React.MouseEventHandler<HTMLButtonElement>;
     save: (draft: Playlist) => void
 }
 
