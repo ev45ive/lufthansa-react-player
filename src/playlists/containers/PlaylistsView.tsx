@@ -4,7 +4,6 @@ import { Playlist } from '../../model/Playlist'
 import { PlaylistDetails } from '../components/PlaylistDetails'
 import { PlaylistEditForm } from '../components/PlaylistEditForm'
 import { PlaylistList } from '../components/PlaylistList'
-import { PlaylistAddForm } from '../components/PlaylistAddForm'
 
 interface Props { }
 
@@ -33,7 +32,7 @@ const data: Playlist[] = [
 export const PlaylistsView = (props: Props) => {
     const [selectedId, setSelectedId] = useState<string | undefined>()
     const [selectedPlaylist, setSelectedPlaylist] = useState<Playlist | undefined>()
-    const [mode, setMode] = useState<'details' | 'form' | 'addForm'>('details')
+    const [mode, setMode] = useState<'details' | 'form'>('details')
     const [playlists, setPlaylists] = useState<Playlist[]>(data)
 
     /* TODO:
@@ -56,9 +55,6 @@ export const PlaylistsView = (props: Props) => {
             - Cancel... go back to details.
             - Save - add new playlist to list and select in in details.
     */
-    useEffect(() => {
-        setSelectedPlaylist(playlists.find(p => p.id == selectedId))
-    }, [selectedId, playlists])
 
     const edit = () => {
         setMode('form')
@@ -71,22 +67,9 @@ export const PlaylistsView = (props: Props) => {
         setPlaylists(playlists.map(p => p.id === draft.id ? draft : p))
     }
 
-    const saveNewPlaylist = (newPlaylist: Playlist) => {
-        setMode('details')
-        setPlaylists([
-            ...playlists,
-            newPlaylist
-        ])
-        setSelectedId(newPlaylist.id)
-    }
-
-    const createNewPlaylist = () => {
-        setMode('addForm')
-    }
-
-    const cancelNewPlaylist = () => {
-        setMode('details')
-    }
+    useEffect(() => {
+        setSelectedPlaylist(playlists.find(p => p.id == selectedId))
+    }, [selectedId, playlists])
 
     return (
         <div>
@@ -97,10 +80,9 @@ export const PlaylistsView = (props: Props) => {
                     <PlaylistList
                         onSelected={id => { setSelectedId(id) }}
                         playlists={playlists}
-                        selectedId={selectedId} 
-                        setPlaylists={setPlaylists}/>
+                        selectedId={selectedId} />
 
-                    <button className="btn btn-info btn-block mt-4" onClick={createNewPlaylist}>Create New Playlist</button>
+                    <button className="btn btn-info btn-block mt-4">Create New Playlist</button>
                 </div>
                 <div className="col">
                     {selectedPlaylist && mode === 'details' && <PlaylistDetails
@@ -111,11 +93,7 @@ export const PlaylistsView = (props: Props) => {
                         playlist={selectedPlaylist}
                         cancel={cancel} />}
 
-                        {!selectedPlaylist && mode === 'details' && <div className="alert alert-info">Please select playlist</div>}
-
-                        {mode === 'addForm' && <PlaylistAddForm cancelNewPlaylist={cancelNewPlaylist} saveNewPlaylist={saveNewPlaylist}
-                        selectedId={selectedId}
-                        setMode={setMode}/>}
+                        <div className="alert alert-info">Please select playlist</div>
                 </div>
             </div>
         </div>
