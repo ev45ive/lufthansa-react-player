@@ -9,6 +9,14 @@ export interface AlbumsSearchResponse {
     albums: PagingObject<Album>;
 }
 
+export interface ArtistsSearchResponse {
+    artists: PagingObject<Artist>;
+}
+
+export type SearchResponse<T>  = {
+    [key in keyof 'artists'|'albums']: PagingObject<T>;
+}
+
 export interface AlbumView {
     id:                     string;
     images:                 Image[];

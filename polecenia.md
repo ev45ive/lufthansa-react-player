@@ -125,3 +125,15 @@ touch src/music-search/components/AlbumCard.tsx
 
 <!-- mkdir -p src/core/services -->
 
+## Solid
+
+https://pl.wikipedia.org/wiki/SOLID_(programowanie_obiektowe) 
+
+https://pl.wikipedia.org/wiki/DRY
+
+https://pl.wikipedia.org/wiki/KISS_(regu%C5%82a)
+
+https://pl.wikipedia.org/wiki/YAGNI
+
+## Rest client
+https://marketplace.visualstudio.com/items?itemName=humao.rest-client
