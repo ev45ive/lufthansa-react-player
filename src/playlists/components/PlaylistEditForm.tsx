@@ -11,7 +11,9 @@ interface Props {
     save: (draft: Playlist) => null | Error[]
 }
 
-export const PlaylistEditForm = ({ playlist, cancel, save }: Props) => {
+export const PlaylistEditForm = React.memo(({ playlist, cancel, save }: Props) => {
+    console.log('render');
+    
     const [message, setMessage] = useState('')
     const [acceptNew, setAcceptNew] = useState(false)
 
@@ -77,5 +79,4 @@ export const PlaylistEditForm = ({ playlist, cancel, save }: Props) => {
             <button className="btn btn-success" onClick={submitForm}>Save</button>
         </div>
     )
-}
-
+})

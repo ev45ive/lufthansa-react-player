@@ -27,8 +27,8 @@ const data: Playlist[] = [
         public: true,
         description: 'albo wszystko polubię co mi tam 😅💖'
     },
-
 ]
+
 
 export const PlaylistsView = (props: Props) => {
     const [selectedId, setSelectedId] = useState<string | undefined>()
@@ -80,7 +80,8 @@ export const PlaylistsView = (props: Props) => {
         description: ''
     }), [])
 
-    return useMemo(() => (
+
+    return/*  useMemo(() => */ (
         <div>
             <h4>PlaylistsView</h4>
             {/* .row>.col*2 */}
@@ -116,5 +117,9 @@ export const PlaylistsView = (props: Props) => {
                 </div>
             </div>
         </div>
-    ), [playlists, selectedPlaylist, mode, emptyPlaylist])
+    )
+    // , [
+    //     playlists, selectedPlaylist, mode, emptyPlaylist, 
+    //     changeSelectedPlaylist, removePlaylist, saveChangedPlaylist, saveNewPlaylist
+    // ])
 }

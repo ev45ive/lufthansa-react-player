@@ -12,7 +12,6 @@ export const PlaylistList = React.memo(({
     playlists, selectedId, onSelected, onRemove
 }: Props) => {
 
-    console.log('render');
     return (
         <div>
             <div className="list-group">
