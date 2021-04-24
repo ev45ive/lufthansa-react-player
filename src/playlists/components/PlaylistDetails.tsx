@@ -9,7 +9,11 @@ interface Props {
 }
 
 
-export const PlaylistDetails: React.FC<Props> = ({ playlist, edit }) => {
+export const PlaylistDetails: React.FC<Props> = React.memo(({
+    playlist,
+    edit
+}) => {
+
     return (
         <div>
             <dl data-playlist-id={playlist.id}>
@@ -29,5 +33,4 @@ export const PlaylistDetails: React.FC<Props> = ({ playlist, edit }) => {
             <button className="btn btn-danger" onClick={edit}>Edit</button>
         </div>
     )
-}
-
+}/* , (prevProps, nextProps) => prevProps.playlist === nextProps.playlist */)

@@ -1,6 +1,7 @@
 // tsrafc
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { Playlist } from '../../model/Playlist'
+import { SearchForm } from '../../core/components/SearchForm'
 import { PlaylistDetails } from '../components/PlaylistDetails'
 import { PlaylistEditForm } from '../components/PlaylistEditForm'
 import { PlaylistList } from '../components/PlaylistList'
@@ -34,30 +35,26 @@ export const PlaylistsView = (props: Props) => {
     const [selectedPlaylist, setSelectedPlaylist] = useState<Playlist | undefined>()
     const [mode, setMode] = useState<'details' | 'form' | 'create'>('details')
     const [playlists, setPlaylists] = useState<Playlist[]>(data)
+    const [filter, setFilter] = useState('')
 
     useEffect(() => {
         setSelectedPlaylist(playlists.find(p => p.id == selectedId))
     }, [selectedId, playlists])
 
+    const edit = useCallback(() => setMode('form'), [])
 
-    const edit = () => {
-        setMode('form')
-    }
+    const cancel = useCallback(() => setMode('details'), [])
 
-    const cancel = () => {
-        setMode('details')
-    }
-
-    const saveChangedPlaylist = (draft: Playlist) => {
+    const saveChangedPlaylist = useCallback((draft: Playlist) => {
         if (draft.name.length < 3) {
             return [new Error('Too short!')]
         }
         setMode('details')
         setPlaylists(playlists => playlists.map(p => p.id === draft.id ? draft : p))
         return null;
-    }
+    }, [])
 
-    const saveNewPlaylist = (draft: Playlist) => {
+    const saveNewPlaylist = useCallback((draft: Playlist) => {
         if (draft.name.length < 3) {
             return [new Error('Too short!')]
         }
@@ -66,34 +63,36 @@ export const PlaylistsView = (props: Props) => {
         setPlaylists(playlists => [...playlists, draft])
         setSelectedId(draft.id)
         return null;
-    }
+    }, [])
 
-    const removePlaylist = (id: Playlist['id']) => {
-        setPlaylists(playlists => playlists.filter(p => p.id !== id))
-    }
+    const removePlaylist = useCallback((id: Playlist['id']) => {
+        setPlaylists(playlists.filter(p => p.id !== id))
+    }, [playlists])
 
-    const changeSelectedPlaylist = (id: Playlist['id']): void => {
+    const changeSelectedPlaylist = useCallback((id: Playlist['id']): void => {
         setSelectedId(selectedId => selectedId === id ? undefined : id)
-    }
+    }, [])
 
-    const emptyPlaylist: Playlist = {
+    const emptyPlaylist = useMemo<Playlist>(() => ({
         id: '',
         name: '',
         public: false,
         description: ''
-    }
+    }), [])
 
-    return (
+    return useMemo(() => (
         <div>
             <h4>PlaylistsView</h4>
             {/* .row>.col*2 */}
             <div className="row">
                 <div className="col">
+                    <SearchForm onSearch={setFilter} />
+                    <hr />
                     <PlaylistList
                         onSelected={changeSelectedPlaylist}
                         onRemove={removePlaylist}
                         playlists={playlists}
-                        selectedId={selectedId} />
+                        selectedId={selectedPlaylist?.id} />
 
                     <button className="btn btn-info btn-block mt-4" onClick={() => setMode('create')}>Create New Playlist</button>
                 </div>
@@ -117,5 +116,5 @@ export const PlaylistsView = (props: Props) => {
                 </div>
             </div>
         </div>
-    )
+    ), [playlists, selectedPlaylist, mode, emptyPlaylist])
 }

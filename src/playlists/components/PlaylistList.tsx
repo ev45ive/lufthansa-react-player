@@ -8,10 +8,11 @@ interface Props {
     onRemove(id: Playlist['id']): void
 }
 
-export const PlaylistList = ({
+export const PlaylistList = React.memo(({
     playlists, selectedId, onSelected, onRemove
 }: Props) => {
 
+    console.log('render');
     return (
         <div>
             <div className="list-group">
@@ -32,4 +33,4 @@ export const PlaylistList = ({
             </div>
         </div>
     )
-}
+})

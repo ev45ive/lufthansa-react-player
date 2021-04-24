@@ -1,6 +1,6 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 import { useEffect, useState } from 'react';
-import { AlbumsSearchResponse, AlbumView, Artist, ArtistsSearchResponse, SearchResponse } from '../../model/Search';
+import { Album, AlbumsSearchResponse, AlbumView, Artist, ArtistsSearchResponse, SearchResponse } from '../../model/Search';
 import { auth } from '../services';
 
 
@@ -34,25 +34,22 @@ export const useSearchAlbums = () => {
     };
 };
 
-export const fetchArtists = async (query: string) => {
-    const response = await axios.get<ArtistsSearchResponse>('https://api.spotify.com/v1/search', {
-        headers: { Authorization: 'Bearer ' + auth.token },
+export const fetchArtists = (query: string) => {
+    const response = axios.get<ArtistsSearchResponse>('https://api.spotify.com/v1/search', {
         params: { q: query, type: 'artist' },
     });
 
-    return (response.data.artists.items);
+    return response.then(response => response.data.artists.items)
 }
 
-export const fetchAlbums = async (query: string) => {
-    const response = await axios.get<AlbumsSearchResponse>('https://api.spotify.com/v1/search', {
-        headers: { Authorization: 'Bearer ' + auth.token },
+export const fetchAlbums = (query: string) => {
+    const response = axios.get<AlbumsSearchResponse>('https://api.spotify.com/v1/search', {
         params: { q: query, type: 'album' },
     });
 
-    return (response.data.albums.items);
+    return (response.then(response => response.data.albums.items))
 }
-
-
+    
 export const useFetch = function <T, P>(fetcher: (params: P) => Promise<T>) {
     const [results, setResults] = useState<T | null>(null);
     const [isLoading, setIsLoading] = useState(false);
