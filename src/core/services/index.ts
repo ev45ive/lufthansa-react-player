@@ -1,6 +1,7 @@
 import axios, { AxiosError } from "axios";
 import { AlbumView } from "../../model/Search";
 import { AuthService } from "./AuthService";
+import { makeAuthTokenInterceptor } from "./authTokenRequestInterceptor";
 
 export const auth = new AuthService({
     auth_url: 'https://accounts.spotify.com/authorize',
@@ -16,10 +17,7 @@ export const auth = new AuthService({
 // holoyis165 @ bulkbye . com
 // placki 777
 
-axios.interceptors.request.use(config => {
-    config.headers['Authorization'] = 'Bearer ' + auth.token;
-    return config
-})
+axios.interceptors.request.use(makeAuthTokenInterceptor(auth))
 
 axios.interceptors.response.use(resp => resp, (err: Error) => {
     if (!isAxiosError(err)) {
