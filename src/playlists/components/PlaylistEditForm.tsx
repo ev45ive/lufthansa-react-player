@@ -12,8 +12,7 @@ interface Props {
 }
 
 export const PlaylistEditForm = React.memo(({ playlist, cancel, save }: Props) => {
-    console.log('render');
-    
+
     const [message, setMessage] = useState('')
     const [acceptNew, setAcceptNew] = useState(false)
 
@@ -59,10 +58,10 @@ export const PlaylistEditForm = React.memo(({ playlist, cancel, save }: Props) =
             </p>)}
 
             <div className="form-group">
-                <label>Name:</label>
-                <input type="text" className="form-control" value={name}
-                    onChange={event => setName(event.target.value)} />
-                <p>{name.length} / 170</p>
+                <label htmlFor="playlist_id">Name:</label>
+                <input type="text" className="form-control" value={name} id="playlist_id"
+                    onChange={event => { setName(event.target.value) }} />
+                <p data-testid="name_len_counter">{name.length} / 170</p>
             </div>
 
             <div className="form-check">

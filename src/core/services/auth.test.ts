@@ -1,6 +1,10 @@
 import { AuthService } from "./AuthService"
 import { makeAuthTokenInterceptor } from "./authTokenRequestInterceptor"
 
+jest.mock('./AuthService', () => ({
+    token: 'MOCK_TOKEN'
+}))
+
 test('interceptor should add Authorization token from auth service', () => {
     const FAKETOKEN = 'ala ma kota'
     const interceptor = makeAuthTokenInterceptor({
