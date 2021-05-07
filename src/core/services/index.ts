@@ -38,7 +38,6 @@ axios.interceptors.response.use(resp => resp, (err: Error) => {
 })
 
 
-auth.init()
 
 
 

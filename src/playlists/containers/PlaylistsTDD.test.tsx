@@ -23,7 +23,7 @@ describe('PlaylistsTDD', () => {
     const server = setupServer(
         rest.get('https://api.spotify.com/v1/me/playlists', (req, res, ctx) => {
             ctx.delay(500)
-            return res(ctx.json(mockPlaylists))
+            return res(ctx.json({ items: mockPlaylists }))
         }),
         rest.get('https://api.spotify.com/v1/playlists/:playlist_id', (req, res, ctx) => {
             return res(ctx.json(mockPlaylists.find(p => p.id == req.params.playlist_id)))
@@ -74,13 +74,15 @@ describe('PlaylistsTDD', () => {
         setup()
         const items = await screen.findAllByRole('tab', {})
         // screen.debug()
-        userEvent.click(screen.getByText('TestTitle 1', { exact: false}))
+        userEvent.click(screen.getByText('TestTitle 1', { exact: false }))
 
         await screen.findByTestId('playlist_name')
 
     })
 
-    test.todo('clicking edit in details show edit form')
+    test.todo('clicking edit in details show edit form', () => {
+
+    })
 
     test.todo('saving form changes updates list and details')
 

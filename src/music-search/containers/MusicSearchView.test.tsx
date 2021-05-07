@@ -1,10 +1,13 @@
-import { render, screen } from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 import { MusicSearchView } from "./MusicSearchView";
-import * as useSearchAlbums from '../../core/hooks/useSearchAlbums'
+import { useSearchAlbums, fetchAlbums } from '../../core/hooks/useSearchAlbums'
+import { mocked } from 'ts-jest/utils'
 
-function mocked<F extends (...args: any) => any>(mock: F) {
-    return mock as unknown as jest.Mock<ReturnType<F>, Parameters<F>>
-}
+// function mocked<F extends (...args: any) => any>(mock: F) {
+//     return mock as unknown as jest.Mock<ReturnType<F>, Parameters<F>>
+// }
+
+type Mocked<T extends (...args: any) => any> = jest.Mock<ReturnType<T>, Parameters<T>>
 
 
 jest.mock('../../core/hooks/useSearchAlbums')
@@ -20,9 +23,10 @@ describe.only('MusicSearchView', () => {
     }) => {
         const setQuerySpy = jest.fn();
 
-        mocked(useSearchAlbums.useFetch).mockReturnValue([{
-            results, isLoading, message
-        }, setQuerySpy]);
+        // expect(useSearchAlbums as jest.Mock<ReturnType<typeof useSearchAlbums>, Parameters<typeof useSearchAlbums>>)
+        // (useSearchAlbums as Mocked<typeof useSearchAlbums>)
+        // mocked(useSearchAlbums).mockReturnValue({ results, isLoading, message, searchAlbums: setQuerySpy });
+        mocked(fetchAlbums).mockResolvedValue(results);
         render(<MusicSearchView />)
 
         return { setQuerySpy }
@@ -38,12 +42,13 @@ describe.only('MusicSearchView', () => {
 
     test('should show results', () => {
         setup({
-            results: []
+            results: [1, 2, 3]
         })
 
         expect(document.querySelector('.alert-danger')).toBeNull()
         expect(screen.queryByText('Loading')).toBeNull()
-        expect(screen.queryByTestId('search-results')).not.toBeNull()
+        
+        screen.findByTestId('search-results')
     })
 
 })

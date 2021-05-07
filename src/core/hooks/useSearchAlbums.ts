@@ -4,7 +4,7 @@ import { Album, AlbumsSearchResponse, AlbumView, Artist, ArtistsSearchResponse, 
 import { auth } from '../services';
 
 
-export const useSearchAlbums = () => {
+export const useSearchAlbums = (q:string) => {
     const [results, setResults] = useState<AlbumView[]>([]);
     const [isLoading, setIsLoading] = useState(false);
     const [message, setMessage] = useState('');
