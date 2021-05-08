@@ -18,7 +18,7 @@ export const PlaylistsTDD = (props: Props) => {
             setPlaylists(res)
         })
     }, [])
-    
+
     useEffect(() => {
         if (!selectedId) return;
 
@@ -27,13 +27,21 @@ export const PlaylistsTDD = (props: Props) => {
 
     return (
         <div>
+            <div className="row">
+                <div className="col">
 
-            <PlaylistList playlists={playlists}
-                onRemove={() => { }}
-                onSelected={setSelectedId}
-            />
+                    <PlaylistList playlists={playlists}
+                        onRemove={() => { }}
+                        onSelected={setSelectedId}
+                    />
+                </div>
+                <div className="col">
+                    {selectedPlaylist && <PlaylistDetails playlist={selectedPlaylist} edit={() => { }} />}
 
-            {selectedPlaylist && <PlaylistDetails playlist={selectedPlaylist} edit={()=>{}} />}
+                </div>
+            </div>
+
+
         </div>
     )
 }

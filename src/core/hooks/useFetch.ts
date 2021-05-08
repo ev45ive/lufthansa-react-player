@@ -26,5 +26,5 @@ export const useFetch = function <T, P>(fetcher: (params: P) => Promise<T>) {
         finally { setIsLoading(false); }
     };
 
-    return [{ isLoading, message, results }, setParams] as const
+    return [{ isLoading, message, results, params }, setParams] as const
 };
