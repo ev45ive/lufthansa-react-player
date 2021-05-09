@@ -5,7 +5,7 @@ import { SearchForm } from '../../core/components/SearchForm'
 import { PlaylistDetails } from '../components/PlaylistDetails'
 import { PlaylistEditForm } from '../components/PlaylistEditForm'
 import { PlaylistList } from '../components/PlaylistList'
-import { useHistory, useLocation } from 'react-router'
+import { useHistory, useLocation, useParams } from 'react-router'
 
 interface Props { }
 
@@ -39,15 +39,16 @@ export const PlaylistsView = (props: Props) => {
     const [filter, setFilter] = useState('')
 
     const { replace, push } = useHistory()
-    const { search: searchParams } = useLocation()
+    // const { search: searchParams } = useLocation()
+    const { playlist_id } = useParams<{ playlist_id: string }>()
 
     useEffect(() => {
-        const id = new URLSearchParams(searchParams).get('id')
-        setSelectedId(id || undefined)
-    }, [searchParams])
+        // const id = new URLSearchParams(searchParams).get('id')
+        setSelectedId(playlist_id || undefined)
+    }, [playlist_id])
 
     const changeSelectedPlaylist = useCallback((id: Playlist['id']): void => {
-        push('/playlists?id=' + id)
+        push('/playlists/' + id)
     }, [])
 
     useEffect(() => {
