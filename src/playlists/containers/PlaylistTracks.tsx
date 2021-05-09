@@ -6,7 +6,7 @@ import SelectPlaylist from '../components/SelectPlaylist'
 import TrackDetails from '../components/TrackDetails'
 import TrackForm from '../components/TrackForm'
 import  TracksList from '../components/TracksList'
-
+import { SearchForm } from '../../core/components/SearchForm'
 
 const playlistsData: Playlist[] = [
     {
@@ -111,6 +111,7 @@ export default class PlaylistTracks extends React.Component<Props, State> {
                 <div className="row">
                     <div className="col">
                         {/* <SelectPlaylist playlists={this.state.playlists} onSelect={(id) => this.selectPlaylist(id)} /> */}
+                        <SearchForm onSearch={() => this.setState({})} query='' />
                         <SelectPlaylist playlists={this.state.playlists} onSelect={this.selectPlaylist} />
                         <hr />
 
