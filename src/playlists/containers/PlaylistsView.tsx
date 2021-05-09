@@ -5,6 +5,7 @@ import { SearchForm } from '../../core/components/SearchForm'
 import { PlaylistDetails } from '../components/PlaylistDetails'
 import { PlaylistEditForm } from '../components/PlaylistEditForm'
 import { PlaylistList } from '../components/PlaylistList'
+import { useHistory, useLocation } from 'react-router'
 
 interface Props { }
 
@@ -36,6 +37,18 @@ export const PlaylistsView = (props: Props) => {
     const [mode, setMode] = useState<'details' | 'form' | 'create'>('details')
     const [playlists, setPlaylists] = useState<Playlist[]>(data)
     const [filter, setFilter] = useState('')
+
+    const { replace, push } = useHistory()
+    const { search: searchParams } = useLocation()
+
+    useEffect(() => {
+        const id = new URLSearchParams(searchParams).get('id')
+        setSelectedId(id || undefined)
+    }, [searchParams])
+
+    const changeSelectedPlaylist = useCallback((id: Playlist['id']): void => {
+        push('/playlists?id=' + id)
+    }, [])
 
     useEffect(() => {
         setSelectedPlaylist(playlists.find(p => p.id == selectedId))
@@ -69,9 +82,6 @@ export const PlaylistsView = (props: Props) => {
         setPlaylists(playlists.filter(p => p.id !== id))
     }, [playlists])
 
-    const changeSelectedPlaylist = useCallback((id: Playlist['id']): void => {
-        setSelectedId(selectedId => selectedId === id ? undefined : id)
-    }, [])
 
     const emptyPlaylist = useMemo<Playlist>(() => ({
         id: '',
