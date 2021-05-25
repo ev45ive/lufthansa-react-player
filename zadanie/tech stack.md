@@ -14,3 +14,6 @@ memoization - useCallback, useMemo, memo, PureComponent
 hook forms - https://react-hook-form.com/
 
 min 1 test
+
+## Json embed + expand
+http://localhost:3000/tasks?_embed=task_changes&_expand=user&_expand=sprint
