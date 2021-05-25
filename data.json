@@ -1,9 +1,44 @@
 {
-    "posts": [
-      { "id": 1, "title": "json-server", "author": "typicode" }
-    ],
-    "comments": [
-      { "id": 1, "body": "some comment", "postId": 1 }
-    ],
-    "profile": { "name": "typicode" }
-  }
+  "users": [
+    {
+      "id": "123",
+      "email": "temai@dwad.dwa",
+      "password": "pa55word"
+    }
+  ],
+  "tasks": [
+    {
+      "id": "678",
+      "title": "my task",
+      "description": "my task",
+      "userId": "123",
+      "sprintId": "987",
+      "status": "inprogres",
+      "createdAt": 1621963631530
+    }
+  ],
+  "comments": [
+    {
+      "id": "345",
+      "userId": "123",
+      "taskId": "678",
+      "createdAt": 1621963631530,
+      "content": "my task"
+    }
+  ],
+  "sprints": [
+    {
+      "id": "987",
+      "createdAt": 1621963631530,
+      "startAt": 1621963631530,
+      "endAt": 1621963631530
+    }
+  ],
+  "task_changes": [
+    {
+      "timestamp": 1621963631530,
+      "taskId": "678",
+      "type": "comment_added"
+    }
+  ]
+}
