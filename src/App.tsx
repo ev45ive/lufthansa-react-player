@@ -13,6 +13,7 @@ import { PlaylistsReduxView } from './playlists/containers/PlaylistsReduxView';
 import { PlaylistTracksHooks } from './playlists/containers/PlaylistTracksHooks';
 import { AlbumDetails } from './music-search/containers/AlbumDetails';
 import { CounterPage } from './core/containers/Counter';
+import { Tasks } from './agile/container/Tasks';
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
               <Route path="/tracks/" component={PlaylistTracksWithRedux} />
               <Route path="/search" component={MusicSearchView} />
               <Route path="/counter" component={CounterPage} />
+              <Route path="/tasks" component={Tasks} />
               <Route path="*" render={() => <h1>Page Not Found</h1>} />
             </Switch>
 

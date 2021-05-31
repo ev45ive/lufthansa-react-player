@@ -11,13 +11,16 @@ import createSagaMiddleware from "redux-saga";
 import { musicSearchSaga } from "./core/sagas/musicSearchSaga";
 import { playlistsSaga } from "./core/sagas/playlistsSagas";
 
+import tasks from './agile/reducers/agile'
+import { agileSaga } from "./agile/sagas/agile";
 
 const reducer = combineReducers({
     // counter: counter,  // Slice Reducer
     counter,
     playlists,
     search,
-    tracks
+    tracks,
+    tasks
 })
 
 export type AppState = ReturnType<typeof reducer>
@@ -38,3 +41,4 @@ export const store = createStore(reducer, composeWithDevTools(
 // Then run the saga
 sagaMiddleware.run(musicSearchSaga)
 sagaMiddleware.run(playlistsSaga)
+sagaMiddleware.run(agileSaga)
